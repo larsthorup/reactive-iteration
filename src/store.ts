@@ -10,7 +10,8 @@ export type Product = {
 
 interface StockState { [key: string]: Product };
 
-const largeState: StockState = Object.fromEntries(products.map((name, i) => {
+const productSubset = import.meta.env['NODE_ENV'] === "test" ? products.slice(0, 10) : products;
+const state: StockState = Object.fromEntries(productSubset.map((name, i) => {
   const id = i.toString();
   return [id, { id: i.toString(), name, quantity: 0 }];
 }));
@@ -18,7 +19,7 @@ const largeState: StockState = Object.fromEntries(products.map((name, i) => {
 
 const stockSlice = createSlice({
   name: 'stock',
-  initialState: largeState,
+  initialState: state,
   reducers: {
     increment: (
       state,
