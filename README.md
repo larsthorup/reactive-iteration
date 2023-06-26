@@ -8,9 +8,12 @@ This is useful for implementing reusable components for things that display larg
 
 ## TODO
 
-- [ ] TableFast and TableSlow next to each other
+- [x] Redux store
+- [x] TableSlow
+- [ ] TableFast
 - [ ] Selectable data sizes
 - [ ] Editable cells
 - [ ] Tests
+- [ ] Screen recording
 - [ ] Removable rows
 - [ ] Adding rows
