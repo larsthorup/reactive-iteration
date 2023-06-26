@@ -9,10 +9,10 @@ This is useful for implementing reusable components for things that display larg
 ## TODO
 
 - [x] Redux store
+- [x] ProductTableInline
+- [x] Editable cells
 - [x] TableSlow
 - [ ] TableFast
-- [ ] Selectable data sizes
-- [ ] Editable cells
 - [ ] Tests
 - [ ] Screen recording
 - [ ] Removable rows

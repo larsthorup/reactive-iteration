@@ -1,26 +1,42 @@
-import TableSlow, { TableColumn } from "./TableSlow";
-import { Product, increment, useAppDispatch, useAppSelector } from "./store";
+import { useState } from "react";
+import ProductTableInline from "./ProductTableInline";
+import ProductTableSlow from "./ProductTableSlow";
 
 function App() {
-  const rows = useAppSelector((state) => Object.values(state.stock));
-  const columns: TableColumn<Product>[] = [
-    { name: "name", Cell: ({ row }) => <>{row.name}</> },
-    {
-      name: "quantity",
-      Cell: function ({ row }) {
-        const { id, quantity } = row;
-        const dispatch = useAppDispatch();
-        const onClick = () => { 
-          dispatch(increment({ id }));
-        };
-        return <button onClick={onClick}>{quantity}</button>;
-      },
-    },
-  ];
+  const [tab, setTab] = useState("inline");
   return (
     <>
       <h1>Reactive Iteration - Demo</h1>
-      <TableSlow rows={rows} columns={columns} />
+      <input
+        type="radio"
+        name="tab"
+        value="inline"
+        checked={tab === "inline"}
+        onChange={() => setTab("inline")}
+      />{" "}
+      Inline |
+      <input
+        type="radio"
+        name="tab"
+        value="slow"
+        checked={tab === "slow"}
+        onChange={() => setTab("slow")}
+      />{" "}
+      Slow |
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        {tab === "inline" && (
+          <div>
+            <h2>Inline</h2>
+            <ProductTableInline />
+          </div>
+        )}
+        {tab === "slow" && (
+          <div>
+            <h2>Slow</h2>
+            <ProductTableSlow />
+          </div>
+        )}
+      </div>
     </>
   );
 }
