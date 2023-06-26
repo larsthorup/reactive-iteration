@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { countTrace } from "./trace";
 
 type TRowConstraint = {
   id: string;
@@ -38,11 +39,12 @@ interface TableFastRowProps<TRow extends TRowConstraint> {
   useRow: (id: string) => TRow;
   columns: TableColumn<TRow>[];
 }
-function TableFastRow<TRow extends TRowConstraint>({
+export function TableFastRow<TRow extends TRowConstraint>({
   rowId,
   useRow,
   columns,
 }: TableFastRowProps<TRow>) {
+  countTrace(TableFastRow.name);
   const row = useRow(rowId);
   return (
     <tr key={row.id}>
