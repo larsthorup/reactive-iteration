@@ -21,10 +21,11 @@ const ProductTableFastMemoed = memo(function ProductTableFastMemoed({ids}: {ids:
       Cell: function ({ row }) {
         const { id, quantity } = row;
         const dispatch = useAppDispatch();
+        const label = `${row.name} quantity`;
         const onClick = () => { 
           dispatch(increment({ id }));
         };
-        return <button onClick={onClick}>{quantity}</button>;
+        return <button aria-label={label} onClick={onClick}>{quantity}</button>;
       },
     },
   ];
