@@ -1,10 +1,11 @@
 # reactive-iteration
 
-How can we efficiently render a list of things where the things that can change? We only want to re-render the items that changes, not the entire list. 
+How can we efficiently render a long list of items where the items can change? 
+We only want to re-render the items that changes, not the entire list. 
 
-Uses a technique of passing a hook as a prop.
+Here we use a technique where we "pass a hook as a prop".
 
-This is useful for implementing reusable components for things that display large amounts of data, like tables, trees and charts.
+This is useful for implementing reusable components that display large amounts of data, like tables, trees and charts.
 
 ## TODO
 
@@ -12,8 +13,6 @@ This is useful for implementing reusable components for things that display larg
 - [x] ProductTableInline
 - [x] Editable cells
 - [x] TableSlow
-- [ ] TableFast
+- [x] TableFast
 - [ ] Tests
 - [ ] Screen recording
-- [ ] Removable rows
-- [ ] Adding rows

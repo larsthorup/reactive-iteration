@@ -1,9 +1,9 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { increment, useAppDispatch, useAppSelector } from "./store";
 
 function ProductTableInline() {
-  const rows = useAppSelector((state) => Object.values(state.stock));
-  const ids = Object.keys(rows);
+  const stock = useAppSelector((state) => state.stock);
+  const ids = useMemo(() => Object.keys(stock), [stock]);
   return <ProductTableInlineMemoed ids={ids} />;
 }
 

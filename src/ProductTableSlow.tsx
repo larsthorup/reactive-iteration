@@ -1,8 +1,10 @@
+import { useMemo } from "react";
 import TableSlow, { TableColumn } from "./TableSlow";
 import { Product, increment, useAppDispatch, useAppSelector } from "./store";
 
 function ProductTableSlow() {
-  const rows = useAppSelector((state) => Object.values(state.stock));
+  const stock = useAppSelector((state) => state.stock);
+  const rows = useMemo(() => Object.values(stock), [stock]);
   const columns: TableColumn<Product>[] = [
     { name: "name", Cell: ({ row }) => <>{row.name}</> },
     {

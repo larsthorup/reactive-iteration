@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProductTableInline from "./ProductTableInline";
 import ProductTableSlow from "./ProductTableSlow";
+import ProductTableFast from "./ProductTableFast";
 
 function App() {
   const [tab, setTab] = useState("inline");
@@ -23,6 +24,14 @@ function App() {
         onChange={() => setTab("slow")}
       />{" "}
       Slow |
+      <input
+        type="radio"
+        name="tab"
+        value="fast"
+        checked={tab === "fast"}
+        onChange={() => setTab("fast")}
+      />{" "}
+      Fast
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {tab === "inline" && (
           <div>
@@ -34,6 +43,12 @@ function App() {
           <div>
             <h2>Slow</h2>
             <ProductTableSlow />
+          </div>
+        )}
+        {tab === "fast" && (
+          <div>
+            <h2>Fast</h2>
+            <ProductTableFast />
           </div>
         )}
       </div>
