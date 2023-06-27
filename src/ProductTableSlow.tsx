@@ -23,6 +23,6 @@ function ProductTableSlow() {
   return (
       <TableSlow rows={rows} columns={columns} />
   );
-
 }
+
 export default ProductTableSlow;

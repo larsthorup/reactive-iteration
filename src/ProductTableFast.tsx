@@ -8,12 +8,11 @@ function ProductTableFast() {
   return <ProductTableFastMemoed ids={ids} />;
 }
 
-function useRow(id: string) {
-  const row = useAppSelector((state) => state.stock[id]);
-  return row;
-}
-
 const ProductTableFastMemoed = memo(function ProductTableFastMemoed({ids}: {ids: string[]}) {
+  function useRow(id: string) {
+    const row = useAppSelector((state) => state.stock[id]);
+    return row;
+  }
   const columns: TableColumn<Product>[] = [
     { name: "name", Cell: ({ row }) => <>{row.name}</> },
     {

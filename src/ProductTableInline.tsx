@@ -22,8 +22,8 @@ const ProductTableInlineMemoed = memo(function ProductTableInlineMemoed({ids}: {
 function ProductTableInlineRow({
   id,
 }: {id: string}) {
-  const row = useAppSelector((state) => state.stock[id]);
-  const { quantity, name } = row;
+  const product = useAppSelector((state) => state.stock[id]);
+  const { quantity, name } = product;
   const dispatch = useAppDispatch();
   const onClick = () => { 
     dispatch(increment({ id }));
