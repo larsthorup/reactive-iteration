@@ -35,19 +35,19 @@ function App() {
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {tab === "inline" && (
           <div>
-            <h2>Inline</h2>
+            <h2>Inlined</h2>
             <ProductTableInline />
           </div>
         )}
         {tab === "slow" && (
           <div>
-            <h2>Slow</h2>
+            <h2>Pass data as prop</h2>
             <ProductTableSlow />
           </div>
         )}
         {tab === "fast" && (
           <div>
-            <h2>Fast</h2>
+            <h2>Pass hook as prop</h2>
             <ProductTableFast />
           </div>
         )}
