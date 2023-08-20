@@ -1,7 +1,7 @@
 import { memo, useMemo } from "react";
-import TableFast from "./TableFast";
-// import { Product } from "./store";
+import TableFast, { TableColumn } from "./TableFast";
 import { StockContextProvider, useStockContextSelector } from "./StockContextProvider";
+import { Product } from "./store";
 
 function ProductTableWithContextProvider() {
   return (
@@ -19,15 +19,15 @@ function ProductTableWithContext() {
   );
 }
 
-function useRow(id /*: string*/) {
+function useRow(id: string) {
   const row = useStockContextSelector(({ stateRef }) => stateRef.current[id]);
   return row;
 }
 
 const ProductTableFastMemoed = memo(
-  function ProductTableFastMemoed({ ids } /*: { ids: string[] }*/) {
+  function ProductTableFastMemoed({ ids }: { ids: string[] }) {
     const increment = useStockContextSelector(({ increment }) => increment);
-    const columns/*: TableColumn<Product>[]*/ = [
+    const columns: TableColumn<Product>[] = [
       { name: "name", Cell: ({ row }) => <>{row.name}</> },
       {
         name: "quantity",

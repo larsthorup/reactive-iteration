@@ -1,12 +1,26 @@
 import { createContext, useCallback, useMemo } from "react";
-import { useContextSelector } from "./context/useContextSelector";
+import {
+  ContextState,
+  ContextSelector,
+  useContextSelector,
+} from "./context/useContextSelector";
 import { useContextStateRef } from "./context/useContextStateRef";
 import { products } from "./products";
+import { Stock } from "./store";
 
-const StockContext = createContext();
+type StockContextState = ContextState<Stock> & {
+  increment: ({ id }: { id: string }) => void;
+};
 
-export const useStockContextSelector = (selector) =>
-  useContextSelector(StockContext, selector);
+const StockContext = createContext<StockContextState>(
+  undefined as unknown as StockContextState
+);
+
+export type StockContextSelector<U> = ContextSelector<Stock, StockContextState, U>;
+
+export function useStockContextSelector<U>(selector: StockContextSelector<U>) {
+  return useContextSelector(StockContext, selector);
+}
 
 const initialStock = Object.fromEntries(
   products.map((name, i) => {
@@ -15,12 +29,12 @@ const initialStock = Object.fromEntries(
   })
 );
 
-export function StockContextProvider({ children }) {
+export function StockContextProvider({ children }: React.PropsWithChildren) {
   const [stateRef, setState, onStateChange] = useContextStateRef(initialStock);
 
   const increment = useCallback(
-    ({id}) =>
-      setState((stock) => {
+    ({ id }: { id: string }) =>
+      setState((stock: Stock) => {
         return {
           ...stock,
           [id]: {

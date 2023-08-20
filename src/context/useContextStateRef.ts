@@ -1,5 +1,7 @@
-import { useListenersRef } from "./useListenersRef";
-import { useStateRef } from "./useStateRef";
+import { AddListener, useListenersRef } from "./useListenersRef";
+import { SetState, StateRef, useStateRef } from "./useStateRef";
+
+export type ContextStateRef<T> = [StateRef<T>, SetState<T>, AddListener<T>];
 
 /**
  * Hook used in conjunction with useContextSelector. It creates a state for the
@@ -7,9 +9,9 @@ import { useStateRef } from "./useStateRef";
  * without triggering a state update.
  * @param {*} init
  */
-export function useContextStateRef(init) {
+export function useContextStateRef<T>(init: T): ContextStateRef<T> {
   // Allow adding state-change listeners
-  const { addListener, notifyListeners } = useListenersRef();
+  const { addListener, notifyListeners } = useListenersRef<T>();
 
   // State doesn't trigger a re-render.
   const [stateRef, setState] = useStateRef(init, (state) => {

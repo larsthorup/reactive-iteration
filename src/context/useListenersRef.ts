@@ -1,18 +1,21 @@
 import { useCallback } from "react";
 import { useStateRef } from "./useStateRef";
 
+export type Listener<T> = (message: T) => void;
+export type AddListener<T> = (listener: Listener<T>) => () => void;
+
 /**
  * Creates a list of listeners that we can use to subscribe, unsubscribe,
  * and notify.
  */
-export function useListenersRef() {
-  const state = useStateRef([]);
+export function useListenersRef<T>() {
+  const state = useStateRef<Listener<T>[]>([]);
 
   const [listenersRef, setListeners] = state;
 
   const removeListener = useCallback(
-    (listener) => {
-      setListeners((listeners) =>
+    (listener: Listener<T>) => {
+      setListeners((listeners: Listener<T>[]) =>
         listeners.filter((l) => !Object.is(l, listener))
       );
     },
@@ -20,7 +23,7 @@ export function useListenersRef() {
   );
 
   const addListener = useCallback(
-    (listener) => {
+    (listener: Listener<T>) => {
       setListeners((listeners) => [...listeners, listener]);
 
       // Allow removing listeners
@@ -32,7 +35,7 @@ export function useListenersRef() {
   );
 
   const notifyListeners = useCallback(
-    (message) => {
+    (message: T) => {
       listenersRef.current.forEach((listener) => listener(message));
     },
     [listenersRef]

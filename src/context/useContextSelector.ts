@@ -1,5 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { useRefVariable } from "./useRefVariable";
+import { StateRef } from "./useStateRef";
+import { AddListener } from "./useListenersRef";
+
+export type ContextState<T> = {
+  stateRef: StateRef<T>;
+  onStateChange: AddListener<T>;
+};
+
+export type ContextSelector<T, TContext extends ContextState<T>, U> = (state: TContext) => U;
 
 /**
  * Used in conjunction with useContextStateRef, this function subscribes to
@@ -8,7 +17,10 @@ import { useRefVariable } from "./useRefVariable";
  * @param {Context} Context React Context (i.e. React.createContext())
  * @param {Function} selector used to select parts of the context.
  */
-export function useContextSelector(Context, selector) {
+export function useContextSelector<T, TContext extends ContextState<T>, U>(
+  Context: React.Context<TContext>,
+  selector: ContextSelector<T, TContext, U>
+) {
   // Context value should never change, ever!
   const context = useContext(Context);
 
@@ -22,10 +34,12 @@ export function useContextSelector(Context, selector) {
   // Add listener for context state updates
   useEffect(() => {
     const cleanup = context.onStateChange(() => {
-      const value = selectorRef.current(context);
+      if (selectorRef.current) {
+        const value = selectorRef.current(context);
 
-      if (!Object.is(prevStateRef.current, value)) {
-        setSelectedState(() => value);
+        if (!Object.is(prevStateRef.current, value)) {
+          setSelectedState(() => value);
+        }
       }
     });
 

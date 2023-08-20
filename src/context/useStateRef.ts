@@ -1,6 +1,9 @@
 import { useCallback, useRef } from "react";
 import { useRefVariable } from "./useRefVariable";
 
+export type StateRef<T> = {current: T};
+export type SetState<T> = (value: T | ((value: T) => T)) => void;
+
 /**
  * Same as useState, but it doesn't trigger a re-render when the state changes,
  * instead it notifies the `onChange` callback.
@@ -12,12 +15,12 @@ import { useRefVariable } from "./useRefVariable";
  * @param {*} init
  * @param {Function} onChange callback executed when the state changes
  */
-export function useStateRef(init, onChange) {
+export function useStateRef<T>(init: T, onChange?: (value: T) => void): [StateRef<T>, SetState<T>] {
   const onChangeRef = useRefVariable(onChange);
 
   const stateRef = useRef(init);
   const setState = useCallback(
-    (value) => {
+    (value: T | ((value: T) => T)) => {
       // Allow passing functions when needed
       if (value instanceof Function) {
         value = value(stateRef.current);
