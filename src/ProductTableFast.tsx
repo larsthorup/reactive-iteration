@@ -1,14 +1,8 @@
-import { memo, useMemo } from "react";
 import TableFast, { TableColumn } from "./TableFast";
-import { Product, increment, useAppDispatch, useAppSelector } from "./store";
+import { Product, increment, selectStockIds, useAppDispatch, useAppSelector } from "./store";
 
 function ProductTableFast() {
-  const stock = useAppSelector((state) => state.stock);
-  const ids = useMemo(() => Object.keys(stock), [stock]);
-  return <ProductTableFastMemoed ids={ids} />;
-}
-
-const ProductTableFastMemoed = memo(function ProductTableFastMemoed({ids}: {ids: string[]}) {
+  const ids = useAppSelector(selectStockIds);
   function useRow(id: string) {
     const row = useAppSelector((state) => state.stock[id]);
     return row;
@@ -31,6 +25,6 @@ const ProductTableFastMemoed = memo(function ProductTableFastMemoed({ids}: {ids:
   return (
       <TableFast rowIds={ids} useRow={useRow} columns={columns} />
   );
-}, ({ids: prevIds}, {ids: nextIds}) => prevIds.length === nextIds.length && prevIds.every((id, i) => id === nextIds[i]));
+}
 
 export default ProductTableFast;

@@ -1,5 +1,5 @@
-import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux";
+import { configureStore, createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useSelector, useDispatch, shallowEqual } from "react-redux";
 import { products } from "./products";
 
 export type Product = {
@@ -38,7 +38,19 @@ export const store = configureStore({
     stock: stockSlice.reducer,
   },
 });
+export type Store = ReturnType<typeof store.getState>;
 export const { increment } = stockSlice.actions;
 
 export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;
 export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
+
+export const selectStockIds = createSelector(
+  (state: Store) => state.stock,
+  (stock) => Object.keys(stock),
+  {
+    memoizeOptions: {
+      // Note: return previous result if the new result is equal to previous result
+      resultEqualityCheck: shallowEqual,
+    },    
+  }
+)
