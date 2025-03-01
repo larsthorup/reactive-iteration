@@ -24,6 +24,8 @@ npm start
 - Inline - no resuable Table component is used, this can be fast.
 - Slow - a resuable Table component is fed all data, this is slow.
 - Fast - a resuable Table component is fed a `useRow` hook, this is fast.
+- React Context - Like "Fast" but with React Context instead of Redux
+- React.memo - Wrap each TableRow in React.memo
 
 ![Running demo](./reactive-iteration-demo-rerenders.gif)
 

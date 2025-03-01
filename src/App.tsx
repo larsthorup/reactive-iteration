@@ -6,7 +6,7 @@ import ProductTableContext from "./ProductTableContext";
 import ProductTableMemo from "./ProductTableMemo";
 
 function App() {
-  const [tab, setTab] = useState("memo");
+  const [tab, setTab] = useState("inline");
   return (
     <>
       <h1>Reactive Iteration - Demo</h1>
