@@ -3,10 +3,10 @@ import ProductTableInline from "./ProductTableInline";
 import ProductTableSlow from "./ProductTableSlow";
 import ProductTableFast from "./ProductTableFast";
 import ProductTableContext from "./ProductTableContext";
-import ProductTableProper from "./ProductTableProper";
+import ProductTableMemo from "./ProductTableMemo";
 
 function App() {
-  const [tab, setTab] = useState("proper");
+  const [tab, setTab] = useState("memo");
   return (
     <>
       <h1>Reactive Iteration - Demo</h1>
@@ -46,10 +46,10 @@ function App() {
         type="radio"
         name="tab"
         value="react-context"
-        checked={tab === "proper"}
-        onChange={() => setTab("proper")}
+        checked={tab === "memo"}
+        onChange={() => setTab("memo")}
       />{" "}
-      Proper |
+      React.memo |
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {tab === "inline" && (
           <div>
@@ -75,10 +75,10 @@ function App() {
             <ProductTableContext />
           </div>
         )}
-        {tab === "proper" && (
+        {tab === "memo" && (
           <div>
-            <h2>Proper</h2>
-            <ProductTableProper />
+            <h2>Memo</h2>
+            <ProductTableMemo />
           </div>
         )}
       </div>

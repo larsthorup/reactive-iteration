@@ -38,14 +38,14 @@ export const store = configureStore({
     stock: stockSlice.reducer,
   },
 });
-export type Store = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 export const { increment } = stockSlice.actions;
 
 export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;
 export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
 
 export const selectStockIds = createSelector(
-  (state: Store) => state.stock,
+  (state: RootState) => state.stock,
   (stock) => Object.keys(stock),
   {
     memoizeOptions: {
@@ -54,3 +54,9 @@ export const selectStockIds = createSelector(
     },    
   }
 )
+
+export const selectStocks = createSelector(
+  (state: RootState) => state.stock,
+  (stock) => Object.values(stock),
+);
+

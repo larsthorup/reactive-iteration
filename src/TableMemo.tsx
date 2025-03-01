@@ -13,35 +13,35 @@ export interface TableColumn<TRow extends TRowConstraint> {
   name: string;
   Cell: (props: CellProps<TRow>) => ReactElement;
 }
-interface TableProperProps<TRow extends TRowConstraint> {
+interface TableMemoProps<TRow extends TRowConstraint> {
   rows: TRow[];
   columns: TableColumn<TRow>[];
 }
 
-function TableProper<TRow extends TRowConstraint>({
+function TableMemo<TRow extends TRowConstraint>({
   rows,
   columns,
-}: TableProperProps<TRow>) {
+}: TableMemoProps<TRow>) {
   return (
     <table>
       <tbody>
         {rows.map((row) => (
-          <TableProperRowMemo key={row.id} row={row} columns={columns} />
+          <TableMemoRow key={row.id} row={row} columns={columns} />
         ))}
       </tbody>
     </table>
   );
 }
 
-interface TableProperRowProps<TRow extends TRowConstraint> {
+interface TableMemoRowProps<TRow extends TRowConstraint> {
   row: TRow;
   columns: TableColumn<TRow>[];
 }
-export function TableProperRow<TRow extends TRowConstraint>({
+export const TableMemoRow = React.memo(<TRow extends TRowConstraint>({
   row,
   columns,
-}: TableProperRowProps<TRow>) {
-  countTrace(TableProperRow.name);
+}: TableMemoRowProps<TRow>) => {
+  countTrace(TableMemoRow.name);
   return (
     <tr key={row.id}>
       {columns.map((column) => {
@@ -54,7 +54,6 @@ export function TableProperRow<TRow extends TRowConstraint>({
       })}
     </tr>
   );
-}
-const TableProperRowMemo = React.memo(TableProperRow);
+}) as <TRow extends TRowConstraint>(props: TableMemoRowProps<TRow>) => ReactElement;
 
-export default TableProper;
+export default TableMemo;
