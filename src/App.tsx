@@ -3,9 +3,10 @@ import ProductTableInline from "./ProductTableInline";
 import ProductTableSlow from "./ProductTableSlow";
 import ProductTableFast from "./ProductTableFast";
 import ProductTableContext from "./ProductTableContext";
+import ProductTableProper from "./ProductTableProper";
 
 function App() {
-  const [tab, setTab] = useState("react-context");
+  const [tab, setTab] = useState("proper");
   return (
     <>
       <h1>Reactive Iteration - Demo</h1>
@@ -40,7 +41,15 @@ function App() {
         checked={tab === "react-context"}
         onChange={() => setTab("react-context")}
       />{" "}
-      React Context
+      React Context |
+      <input
+        type="radio"
+        name="tab"
+        value="react-context"
+        checked={tab === "proper"}
+        onChange={() => setTab("proper")}
+      />{" "}
+      Proper |
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {tab === "inline" && (
           <div>
@@ -64,6 +73,12 @@ function App() {
           <div>
             <h2>useContextSelector</h2>
             <ProductTableContext />
+          </div>
+        )}
+        {tab === "proper" && (
+          <div>
+            <h2>Proper</h2>
+            <ProductTableProper />
           </div>
         )}
       </div>
